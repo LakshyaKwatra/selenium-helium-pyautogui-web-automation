@@ -8,8 +8,8 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 
-username = "angela.david.scott@gmail.com"
-password = "jmztshqqxkumstgp"
+username = "YOUR_MAIL@gmail.com"
+password = "YOUR_PASSWORD"
 
 driver= webdriver.Chrome()
 #driver= webdriver.Chrome("E:\QA\Resource\WEBDRIVER\chromedriverserver\chromedriver.exe")
