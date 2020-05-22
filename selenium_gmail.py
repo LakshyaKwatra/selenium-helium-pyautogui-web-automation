@@ -5,146 +5,76 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pyautogui as pg
-from email import encoders
 
-username = "YOUR EMAIL@gmail.com"
-password = "YOUR_PASSWORD"
+FULLFILEPATH = r"C:\Users\lakshya\Desktop\myEnvs\autopy\PythonImage.png"
+FILENAME = "PythonImage.png"
+USERNAME = "YOUR_EMAIL@gmail.com"
+PASSWORD = "YOUR_PASSWORD"
+RECEIVER_MAIL = "RECEIVER_MAIL@gmail.com"
+SUBJECT = "WEB AUTOMATION"
+MESSAGE = "This is an auto-generated mail"
 
+IMAGES_FOR_RECOGNITION = ["open.png","open2.png"]
+
+#Starting Chrome and Opening Stackoverflow
 driver= webdriver.Chrome()
-#driver= webdriver.Chrome("E:\QA\Resource\WEBDRIVER\chromedriverserver\chromedriver.exe")
 driver.get("https://stackoverflow.com/users/login")
-time.sleep(3)
-signin_google=driver.find_element_by_xpath('//*[@id="openid-buttons"]/button[1]')
-signin_google.click()
-driver.find_element_by_xpath('//input[@type="email"]').send_keys(username)
-driver.find_element_by_xpath('//*[@id="identifierNext"]').click()
-time.sleep(6)
 
-field = driver.find_element_by_xpath('//input[@type="password"]')
-field.send_keys(password)
+#Signing in to google from Stack Overflow because google does not allow chromedriver to log in to google directly because of security reasons
+signin_google = WebDriverWait(driver, 500).until(EC.presence_of_element_located((By.XPATH, '//*[@id="openid-buttons"]/button[1]')))
+signin_google.click()
+
+#filling in username field and clicking the next button
+email_field = WebDriverWait(driver, 500).until(EC.presence_of_element_located((By.XPATH, '//input[@type="email"]')))
+email_field = WebDriverWait(driver, 500).until(EC.element_to_be_clickable((By.XPATH, '//input[@type="email"]')))
+email_field.send_keys(USERNAME)
+driver.find_element_by_xpath('//*[@id="identifierNext"]').click()
+
+#filling in password field and press the signin button
+pw_field = WebDriverWait(driver, 500).until(EC.presence_of_element_located((By.XPATH, '//input[@type="password"]')))
+pw_field = WebDriverWait(driver, 500).until(EC.element_to_be_clickable((By.XPATH, '//input[@type="password"]')))
+pw_field.send_keys(PASSWORD)
 driver.find_element_by_xpath('//*[@id="passwordNext"]').click()
 
+#opening new window, switching to it and opening gmail in it
 driver.execute_script("window.open('');")
-driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 'w')
-# Switch to the new window
 driver.switch_to.window(driver.window_handles[1])
-driver.get('https://gmail.com')
 time.sleep(2)
+driver.get('https://gmail.com')
 
-driver.find_element_by_css_selector("[gh='cm']").click()
-element = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, ".//textarea[contains(@aria-label, 'To')]")))
-element.click()
-element.send_keys("RECEIVER_MAIL@gmail.com")
+#pressing compose button
+compose_button = WebDriverWait(driver, 500).until(EC.presence_of_element_located((By.CSS_SELECTOR, "[gh='cm']")))
+compose_button.click()
 
-driver.find_element_by_xpath("(.//*[@aria-label='Message Body'])[2]").click()
-driver.find_element_by_xpath("(.//*[@aria-label='Message Body'])[2]").send_keys("This is an auto-generated mail")
-driver.find_element_by_xpath("//div[contains(@aria-label,'Attach files')]").click();
-time.sleep(6)
-pg.typewrite(r"C:\Users\lakshya\Desktop\myEnvs\autopy\PythonImage.png")            #PATH TO THE FILE TO BE SENT AS AN ATTACHMENT
+#filling in to, subject and message fields and pressing the attach button
+to_field = WebDriverWait(driver, 500).until(EC.presence_of_element_located((By.XPATH, ".//textarea[contains(@aria-label, 'To')]")))
+to_field.click()
+to_field.send_keys(RECEIVER_MAIL)
 pg.typewrite('\n')
-time.sleep(15)
+
+subject_field = WebDriverWait(driver, 500).until(EC.presence_of_element_located((By.NAME, "subjectbox")))
+subject_field = WebDriverWait(driver, 500).until(EC.element_to_be_clickable((By.NAME, "subjectbox")))
+subject_field.click()
+subject_field.send_keys(SUBJECT)
+
+message_field = driver.find_element_by_xpath("(.//*[@aria-label='Message Body'])[2]")
+message_field.click()
+message_field.send_keys(MESSAGE)
+
+attach_button = driver.find_element_by_xpath("//div[contains(@aria-label,'Attach files')]")
+attach_button.click()
+pg.moveTo(5,5,duration = 0.25)
+
+#Wait for the select file to upload window using image recognition of open button, and add file path 
+while True:
+    if pg.locateOnScreen(IMAGES_FOR_RECOGNITION[0]) != None or pg.locateOnScreen(IMAGES_FOR_RECOGNITION[1]) != None:
+        break
+pg.typewrite(FULLFILEPATH)
+pg.typewrite('\n')
+
+#Wait for the file to get uploaded
+alabel = 'Attachment: '+ FILENAME +'. Press enter to view the attachment and delete to remove it'
+wait_for_upload = WebDriverWait(driver, 500).until(EC.presence_of_element_located((By.XPATH, "//div[ contains(@aria-label,'"+alabel+"')]")))
+
+#send mail using Ctrl + Enter
 driver.find_element_by_xpath("(.//*[@aria-label='Message Body'])[2]").send_keys(Keys.CONTROL + Keys.ENTER)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#driver.find_element_by_css_selector("[gh='cm']").click()
-#time.sleep(6)
-##pg.typewrite(f"angelkwatra123@gmail.com\n")
-#time.sleep(6)
-#driver.find_element_by_xpath("//div[contains(@aria-label,'Attach files')]").click();
-#time.sleep(6)
-#pg.typewrite(r"C:\Users\lakshya\Desktop\myEnvs\autopy\PythonImage.png")
-#pg.typewrite('\n')
-
-#element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "myXpath")))
-
-
-
-# You can use (Keys.CONTROL + 't') on other OSs
-#driver.findElement(By.name("subjectbox")).click();
-#driver.findElement(By.name("subjectbox")).sendKeys("efgh");
-
-
-#driver.switch_to_frame('canvas_frame')
-# Load a page
-
-# Make the tests...
-
-# close the tab
-# (Keys.CONTROL + 'w') on other OSs.
-#driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 'w')
-
-
-#driver.close()
-
-#driver.get("https://mail.google.com/mail/")
-
-
-# emailid=driver.find_element_by_id("Email")
-# emailid.send_keys("username")
-#
-#
-# passw=driver.find_element_by_id("Passwd")
-# passw.send_keys("password")
-#
-#
-# signin=driver.find_element_by_id("signIn")
-# signin.click()
-#
-#
-# time.sleep(10)
-#
-#
-# driver.switch_to_frame('canvas_frame')
-#
-#
-# sentmail= driver.find_element_by_link_text('Sent Mail')
-# sentmail.click()
-#
-#
-# time.sleep(10)
-#
-#
-# sentmail= driver.find_element_by_link_text('Your Name')
-# sentmail.click()
-#
-#
-# lout= driver.find_element_by_link_text('Sign out')
-# lout.click()
-
-
-# from selenium import webdriver
-# from time import sleep
-#
-# class Google:
-#
-#  def __init__(self,username,password):
-#   self.driver=webdriver.Chrome()
-#   self.driver.get('https://stackoverflow.com/users/signu...)
-#   sleep(3)
-#   self.driver.find_element_by_xpath('//*[@id="openid-buttons"]/button[1]').click()
-#   self.driver.find_element_by_xpath('//input[@type="email"]').send_keys(username)
-#   self.driver.find_element_by_xpath('//*[@id="identifierNext"]').click()
-#   sleep(3)
-#   self.driver.find_element_by_xpath('//input[@type="password"]').send_keys(password)
-#   self.driver.find_element_by_xpath('//*[@id="passwordNext"]').click()
-#   sleep(2)
-#   self.driver.get('https://youtube.com')
-#   sleep(5)
-#
-# passw=open('New Text Document (2).txt',"r",encoding="utf-8")
-# password=str(passw.read())
-# user=open('New Text Document (3).txt',"r",encoding="utf-8")
-# username=str(user.read())
-# mylike= Google(username,password)
