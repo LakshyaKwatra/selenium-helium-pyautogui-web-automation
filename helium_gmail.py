@@ -8,8 +8,8 @@ PASSWORD = "YOUR_PASSWORD"
 RECEIVER_EMAIL = "RECEIVER_EMAIL@gmail.com"
 SUBJECT = "WEB AUTOMATION"
 MESSAGE = "This is an auto-generated mail"
-FILEPATH = r"C:\Users\lakshya\Desktop\myEnvs\autopy\PythonImage.jpg"
-FILENAME = "PythonImage.jpg"
+FILEPATH = r"C:\Users\lakshya\Desktop\myEnvs\autopy\PythonImage.png"
+FILENAME = "PythonImage.png"
 IMAGE_EXTNS = ['png','jpg','gif']
 
 driver = start_chrome('gmail.com')
