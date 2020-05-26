@@ -73,6 +73,7 @@ def attach_file(driver, FILEPATH, FILENAME):
             
 def send_mail(driver):
     driver.find_element_by_xpath("(//div[@class='T-I J-J5-Ji aoO v7 T-I-atl L3'])").click()
+    wait = WebDriverWait(driver, 500).until(EC.presence_of_element_located((By.XPATH,"//span[starts-with(text(), 'Message sent.')]")))
 
 def log_out(driver):
     dropdown = WebDriverWait(driver, 500).until(EC.presence_of_element_located((By.XPATH,"//span[@class = 'gb_Ia gbii']")))
