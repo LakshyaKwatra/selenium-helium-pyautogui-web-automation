@@ -57,7 +57,7 @@ Disable 2 factor authentication and allow access to less secure apps.
    - Under **Less secure app access** section, tap turn on if it's turned off.
 
 ## Instructions to run
-- Add details like e-mail, password, download url, etc in execute.py
+- Add details like e-mail, password, download url, etc in *execute.py*.
 - Select the browser you want to work on by setting SELECTED_BROWSER variable in *execute.py* as: 
    - BROWSERS[0] for Chrome
    - BROWSERS[1] for Internet Explorer
