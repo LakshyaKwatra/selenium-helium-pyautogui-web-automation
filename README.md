@@ -5,8 +5,8 @@ I am doing this project as a part of my internship at Samsung R&D Institute, Del
 
 ## File Description
 - **selenium_funx.py**: contains browser-independent functions created with selenium for web automation.
-- **execute.py**: This file uses the functions present in selenium_funx.py for complete implementation of downloading a file, mailing it as an attachment, logging out and closing the browser window.
-- **download_and_mail.py**: contains Helium implementation of downloading a file, mailing it as an attachment.
+- **execute.py**: This file uses the functions present in *selenium_funx.py* for complete implementation of downloading a file, mailing it as an attachment, logging out and closing the browser window.
+- **download_and_mail.py**: contains Helium implementation of downloading a file and mailing it as an attachment.
 - **helium_gmail.py**: contains Helium implementation of sending a pre-downloaded file as an attachment.
 - **selenium_gmail.py**: contains Selenium implementation of sending a pre-downloaded file as an attachment using pyautogui image recognition for dealing with external windows.
 
@@ -58,5 +58,9 @@ Disable 2 factor authentication and allow access to less secure apps.
 
 ## Instructions to run
 - Add details like e-mail, password, download url, etc in execute.py
+- Select the browser you want to work on by setting SELECTED_BROWSER variable in *execute.py* as: 
+   - BROWSERS[0] for Chrome
+   - BROWSERS[1] for Internet Explorer
+   - BROWSERS[2] for Firefox
 - Run this in the command line:
 >  python execute.py
