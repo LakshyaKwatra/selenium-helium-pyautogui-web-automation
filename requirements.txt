@@ -28,7 +28,7 @@ PyScreeze==0.1.26
 PyTweening==1.0.3
 pytz==2020.1
 requests==2.23.0
-rsa==4.0
+rsa==4.1
 selenium==3.141.0
 setuptools==41.1.0
 six==1.14.0
