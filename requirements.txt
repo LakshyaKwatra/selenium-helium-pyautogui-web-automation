@@ -34,6 +34,6 @@ setuptools==41.1.0
 six==1.14.0
 soupsieve==2.0.1
 uritemplate==3.0.1
-urllib3==1.25.9
+urllib3==1.26.5
 wheel==0.33.4
 wikipedia==1.4.0
